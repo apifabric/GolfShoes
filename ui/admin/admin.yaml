@@ -1,0 +1,415 @@
+about:
+  date: October 31, 2024 18:40:08
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 14
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Address:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+    - name: street
+    - name: city
+    - name: state
+    - name: postal_code
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    description: Addresses used by customers for orders
+    info_list: Addresses used by customers for orders
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: Address
+    user_key: id
+  Brand:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    - name: id
+    description: Brands of products
+    info_list: Brands of products
+    tab_groups:
+    - direction: tomany
+      fks:
+      - brand_id
+      name: ProductList
+      resource: Product
+    type: Brand
+    user_key: name
+  Cart:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    description: Shopping cart details for customers
+    info_list: Shopping cart details for customers
+    tab_groups:
+    - direction: tomany
+      fks:
+      - cart_id
+      name: CartItemList
+      resource: CartItem
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: Cart
+    user_key: id
+  CartItem:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: cart_id
+    - name: product_id
+    - name: quantity
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    description: Items within a shopping cart
+    info_list: Items within a shopping cart
+    tab_groups:
+    - direction: toone
+      fks:
+      - cart_id
+      name: cart
+      resource: Cart
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: CartItem
+    user_key: id
+  Category:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    - name: id
+    description: Product categories
+    info_list: Product categories
+    tab_groups:
+    - direction: tomany
+      fks:
+      - category_id
+      name: ProductList
+      resource: Product
+    type: Category
+    user_key: name
+  Customer:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: email
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    - name: id
+    description: Stores details of customers
+    info_list: Stores details of customers
+    tab_groups:
+    - direction: tomany
+      fks:
+      - customer_id
+      name: AddressList
+      resource: Address
+    - direction: tomany
+      fks:
+      - customer_id
+      name: CartList
+      resource: Cart
+    - direction: tomany
+      fks:
+      - customer_id
+      name: OrderList
+      resource: Order
+    - direction: tomany
+      fks:
+      - customer_id
+      name: ReviewList
+      resource: Review
+    type: Customer
+    user_key: name
+  Order:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+    - name: payment_id
+    - name: total_amount
+    - name: status
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    description: Represents an order placed by a customer
+    info_list: Represents an order placed by a customer
+    tab_groups:
+    - direction: tomany
+      fks:
+      - order_id
+      name: OrderDetailList
+      resource: OrderDetail
+    - direction: tomany
+      fks:
+      - order_id
+      name: PaymentList
+      resource: Payment
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    - direction: toone
+      fks:
+      - payment_id
+      name: payment
+      resource: Payment
+    type: Order
+    user_key: id
+  OrderDetail:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: order_id
+    - name: product_id
+    - name: quantity
+    - name: unit_price
+    - name: amount
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    description: Details of products ordered in an order
+    info_list: Details of products ordered in an order
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: OrderDetail
+    user_key: id
+  Payment:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: order_id
+    - name: payment_date
+      type: DATETIME
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    - name: amount_paid
+    description: Payment records for orders
+    info_list: Payment records for orders
+    tab_groups:
+    - direction: tomany
+      fks:
+      - payment_id
+      name: OrderList
+      resource: Order
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    type: Payment
+    user_key: id
+  Product:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: brand_id
+    - name: category_id
+    - name: price
+    - name: stock_quantity
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    - name: id
+    description: Stores details of men's golf shoes
+    info_list: Stores details of men's golf shoes
+    tab_groups:
+    - direction: tomany
+      fks:
+      - product_id
+      name: CartItemList
+      resource: CartItem
+    - direction: tomany
+      fks:
+      - product_id
+      name: OrderDetailList
+      resource: OrderDetail
+    - direction: tomany
+      fks:
+      - product_id
+      name: PromotionList
+      resource: Promotion
+    - direction: tomany
+      fks:
+      - product_id
+      name: ReviewList
+      resource: Review
+    - direction: toone
+      fks:
+      - brand_id
+      name: brand
+      resource: Brand
+    - direction: toone
+      fks:
+      - category_id
+      name: category
+      resource: Category
+    type: Product
+    user_key: name
+  Promotion:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: product_id
+    - name: discount_percentage
+    - name: start_date
+      type: DATETIME
+    - name: end_date
+      type: DATETIME
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    description: Promotional offers on products
+    info_list: Promotional offers on products
+    tab_groups:
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Promotion
+    user_key: id
+  Review:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+    - name: product_id
+    - name: rating
+    - name: comment
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+    - name: updated_date
+      type: DATETIME
+    description: Customer reviews and ratings for products
+    info_list: Customer reviews and ratings for products
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Review
+    user_key: id
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

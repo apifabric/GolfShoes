@@ -1,0 +1,623 @@
+about:
+  date: October 31, 2024 18:40:08
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Address:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: customer_id
+      template: integer
+      type: INTEGER
+    - name: street
+      template: text
+      type: VARCHAR
+    - name: city
+      template: text
+      type: VARCHAR
+    - name: state
+      template: text
+      type: VARCHAR
+    - name: postal_code
+      template: text
+      type: VARCHAR
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+      template: text
+      type: VARCHAR
+    - name: updated_date
+      type: DATETIME
+    description: Addresses used by customers for orders
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Addresses used by customers for orders
+    label: Address
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: Address
+  Brand:
+    columns:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+      template: text
+      type: VARCHAR
+    - name: updated_date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Brands of products
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Brands of products
+    label: Brand
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - brand_id
+      name: ProductList
+      resource: Product
+    type: Brand
+  Cart:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: customer_id
+      template: integer
+      type: INTEGER
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+      template: text
+      type: VARCHAR
+    - name: updated_date
+      type: DATETIME
+    description: Shopping cart details for customers
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Shopping cart details for customers
+    label: Cart
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - cart_id
+      name: CartItemList
+      resource: CartItem
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: Cart
+  CartItem:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: cart_id
+      template: integer
+      type: INTEGER
+    - name: product_id
+      template: integer
+      type: INTEGER
+    - name: quantity
+      template: integer
+      type: INTEGER
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+      template: text
+      type: VARCHAR
+    - name: updated_date
+      type: DATETIME
+    description: Items within a shopping cart
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Items within a shopping cart
+    label: CartItem
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - cart_id
+      name: cart
+      resource: Cart
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: CartItem
+  Category:
+    columns:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+      template: text
+      type: VARCHAR
+    - name: updated_date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Product categories
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Product categories
+    label: Category
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - category_id
+      name: ProductList
+      resource: Product
+    type: Category
+  Customer:
+    columns:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: email
+      template: text
+      type: VARCHAR
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+      template: text
+      type: VARCHAR
+    - name: updated_date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Stores details of customers
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Stores details of customers
+    label: Customer
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - customer_id
+      name: AddressList
+      resource: Address
+    - direction: tomany
+      fks:
+      - customer_id
+      name: CartList
+      resource: Cart
+    - direction: tomany
+      fks:
+      - customer_id
+      name: OrderList
+      resource: Order
+    - direction: tomany
+      fks:
+      - customer_id
+      name: ReviewList
+      resource: Review
+    type: Customer
+  Order:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: customer_id
+      template: integer
+      type: INTEGER
+    - name: payment_id
+      template: integer
+      type: INTEGER
+    - name: total_amount
+      template: real
+      type: FLOAT
+    - name: status
+      template: text
+      type: VARCHAR
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+      template: text
+      type: VARCHAR
+    - name: updated_date
+      type: DATETIME
+    description: Represents an order placed by a customer
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents an order placed by a customer
+    label: Order
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - order_id
+      name: OrderDetailList
+      resource: OrderDetail
+    - direction: tomany
+      fks:
+      - order_id
+      name: PaymentList
+      resource: Payment
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    - direction: toone
+      fks:
+      - payment_id
+      name: payment
+      resource: Payment
+    type: Order
+  OrderDetail:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: order_id
+      template: integer
+      type: INTEGER
+    - name: product_id
+      template: integer
+      type: INTEGER
+    - name: quantity
+      template: integer
+      type: INTEGER
+    - name: unit_price
+      template: real
+      type: FLOAT
+    - name: amount
+      template: real
+      type: FLOAT
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+      template: text
+      type: VARCHAR
+    - name: updated_date
+      type: DATETIME
+    description: Details of products ordered in an order
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Details of products ordered in an order
+    label: OrderDetail
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: OrderDetail
+  Payment:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: order_id
+      template: integer
+      type: INTEGER
+    - name: payment_date
+      type: DATETIME
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+      template: text
+      type: VARCHAR
+    - name: updated_date
+      type: DATETIME
+    - name: amount_paid
+      template: real
+      type: FLOAT
+    description: Payment records for orders
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Payment records for orders
+    label: Payment
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - payment_id
+      name: OrderList
+      resource: Order
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    type: Payment
+  Product:
+    columns:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: brand_id
+      template: integer
+      type: INTEGER
+    - name: category_id
+      template: integer
+      type: INTEGER
+    - name: price
+      template: real
+      type: FLOAT
+    - name: stock_quantity
+      template: integer
+      type: INTEGER
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+      template: text
+      type: VARCHAR
+    - name: updated_date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Stores details of men's golf shoes
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Stores details of men's golf shoes
+    label: Product
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - product_id
+      name: CartItemList
+      resource: CartItem
+    - direction: tomany
+      fks:
+      - product_id
+      name: OrderDetailList
+      resource: OrderDetail
+    - direction: tomany
+      fks:
+      - product_id
+      name: PromotionList
+      resource: Promotion
+    - direction: tomany
+      fks:
+      - product_id
+      name: ReviewList
+      resource: Review
+    - direction: toone
+      fks:
+      - brand_id
+      name: brand
+      resource: Brand
+    - direction: toone
+      fks:
+      - category_id
+      name: category
+      resource: Category
+    type: Product
+  Promotion:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: product_id
+      template: integer
+      type: INTEGER
+    - name: discount_percentage
+      template: real
+      type: FLOAT
+    - name: start_date
+      type: DATETIME
+    - name: end_date
+      type: DATETIME
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+      template: text
+      type: VARCHAR
+    - name: updated_date
+      type: DATETIME
+    description: Promotional offers on products
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Promotional offers on products
+    label: Promotion
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Promotion
+  Review:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: customer_id
+      template: integer
+      type: INTEGER
+    - name: product_id
+      template: integer
+      type: INTEGER
+    - name: rating
+      template: integer
+      type: INTEGER
+    - name: comment
+      template: text
+      type: VARCHAR
+    - name: created_date
+      type: DATETIME
+    - name: created_by
+      template: text
+      type: VARCHAR
+    - name: updated_date
+      type: DATETIME
+    description: Customer reviews and ratings for products
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Customer reviews and ratings for products
+    label: Review
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Review
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

@@ -1,0 +1,59 @@
+<o-form-layout-manager attr="Order" mode="tab" title="ORDER">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="OrderTable" 
+            service="Order" 
+            entity="Order" 
+            title="ORDER"
+            keys="id"
+            columns="id;customer_id;payment_id;total_amount;status;created_date;created_by;updated_date" 
+            header-actions="R;D"
+            visible-columns="id;customer_id;payment_id;total_amount;status;created_date;created_by;updated_date"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="customer_id" title="customer_id">
+    <o-table-cell-renderer-service attr="customer_id" 
+        service="Customer" entity="CustomerType" columns="id;name"
+        parent-keys="id:customer_id"
+        value-column="name" keys="customer_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="payment_id" title="payment_id">
+    <o-table-cell-renderer-service attr="payment_id" 
+        service="Payment" entity="PaymentType" columns="id;id"
+        parent-keys="id:payment_id"
+        value-column="id" keys="payment_id"
+        visible-columns="id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #total_amount attr="total_amount" title="total_amount" type="currency" editable="no" required="no" currency-symbol="$" currency-symbol-position="left" thousand-separator=","decimal-separator="."></o-table-column>
+            
+            <o-table-column #status attr="status" title="status" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-date-input #created_date attr="created_date" type="timestamp" label="created_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-table-column #created_by attr="created_by" title="created_by" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-date-input #updated_date attr="updated_date" type="timestamp" label="updated_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>
